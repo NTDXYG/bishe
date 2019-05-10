@@ -1,0 +1,246 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layuiAdmin 控制台主页一</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+  
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md8">
+        <div class="layui-row layui-col-space15">
+          <div class="layui-col-sm6 layui-col-md4">
+            <div class="layui-card">
+              <div class="layui-card-header">
+                访问量
+                <span class="layui-badge layui-bg-blue layuiadmin-badge">周</span>
+              </div>
+              <div class="layui-card-body layuiadmin-card-list">
+                <p class="layuiadmin-big-font">9,666</p>
+                <p>
+                  总计访问量
+                  <span class="layuiadmin-span-color">88万 <i class="layui-inline layui-icon layui-icon-flag"></i></span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="layui-col-sm6 layui-col-md4">
+            <div class="layui-card">
+              <div class="layui-card-header">
+                下载
+                <span class="layui-badge layui-bg-cyan layuiadmin-badge">月</span>
+              </div>
+              <div class="layui-card-body layuiadmin-card-list">
+                <p class="layuiadmin-big-font">3,555</p>
+                <p>
+                  新下载
+                  <span class="layuiadmin-span-color">10% <i class="layui-inline layui-icon layui-icon-face-smile-b"></i></span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="layui-col-sm6 layui-col-md4">
+            <div class="layui-card">
+              <div class="layui-card-header">
+                活跃用户
+                <span class="layui-badge layui-bg-orange layuiadmin-badge">月</span>
+              </div>
+              <div class="layui-card-body layuiadmin-card-list">
+
+                <p class="layuiadmin-big-font">6,666</p>
+                <p>
+                  最近一个月
+                  <span class="layuiadmin-span-color">15% <i class="layui-inline layui-icon layui-icon-user"></i></span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="layui-col-md12">
+            <div class="layui-card">
+              <div class="layui-card-header">数据概览</div>
+              <div class="layui-card-body">
+                
+                <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade" lay-filter="LAY-index-dataview">
+                  <div carousel-item id="LAY-index-dataview">
+                    <div><i class="layui-icon layui-icon-loading1 layadmin-loading"></i></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            <div class="layui-card">
+              <div class="layui-card-header">用户全国分布</div>
+              <div class="layui-card-body">
+                <div class="layui-row layui-col-space15">
+                  <div class="layui-col-sm4">
+                    <table class="layui-table layuiadmin-page-table" lay-skin="line">
+                      <thead>
+                      <tr>
+                        <th>排名</th>
+                        <th>地区</th>
+                        <th>人数</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>浙江</td>
+                        <td>62310</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>上海</td>
+                        <td>59190</td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td>广东</td>
+                        <td>55891</td>
+                      </tr>
+                      <tr>
+                        <td>4</td>
+                        <td>北京</td>
+                        <td>51919</td>
+                      </tr>
+                      <tr>
+                        <td>5</td>
+                        <td>山东</td>
+                        <td>39231</td>
+                      </tr>
+                      <tr>
+                        <td>6</td>
+                        <td>湖北</td>
+                        <td>37109</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="layui-col-sm8">
+
+                    <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade" lay-filter="LAY-index-pagethree">
+                      <div carousel-item id="LAY-index-pagethree">
+                        <div><i class="layui-icon layui-icon-loading1 layadmin-loading"></i></div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="layui-col-md4">
+        <div class="layui-card">
+          <div class="layui-card-header">版本信息</div>
+          <div class="layui-card-body layui-text">
+            <table class="layui-table">
+              <colgroup>
+                <col width="100">
+                <col>
+              </colgroup>
+              <tbody>
+                <tr>
+                  <td>当前版本</td>
+                  <td>
+                    <script type="text/html" template>
+                      v{{ layui.admin.v }}
+                      <a href="http://fly.layui.com/docs/3/" target="_blank" style="padding-left: 15px;">更新日志</a>
+                    </script>
+                  </td>
+                </tr>
+                <tr>
+                  <td>前端框架</td>
+                  <td>
+                    <script type="text/html" template>
+                      layui-v{{ layui.v }}
+                    </script>
+                 </td>
+                </tr>
+                <tr>
+                  <td>后端框架</td>
+                  <td>SpringBoot-v1.5.19</td>
+                </tr>
+                <tr>
+                  <td>获取渠道</td>
+                  <td style="padding-bottom: 0;">
+                    <div class="layui-btn-container">
+                      <a href="http://www.layui.com/admin/" target="_blank" class="layui-btn layui-btn-danger">获取授权</a>
+                      <a href="http://fly.layui.com/download/layuiAdmin/" target="_blank" class="layui-btn">立即下载</a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <div class="layui-card">
+          <div class="layui-card-header">效果报告</div>
+          <div class="layui-card-body layadmin-takerates">
+            <div class="layui-progress" lay-showPercent="yes">
+              <h3>转化率（日同比 28% <span class="layui-edge layui-edge-top" lay-tips="增长" lay-offset="-15"></span>）</h3>
+              <div class="layui-progress-bar" lay-percent="65%"></div>
+            </div>
+            <div class="layui-progress" lay-showPercent="yes">
+              <h3>签到率（日同比 11% <span class="layui-edge layui-edge-bottom" lay-tips="下降" lay-offset="-15"></span>）</h3>
+              <div class="layui-progress-bar" lay-percent="32%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="layui-card">
+          <div class="layui-card-header">动态</div>
+          <div class="layui-card-body">
+            <div class="layui-carousel layadmin-carousel layadmin-news" data-autoplay="true" data-anim="fade" lay-filter="news">
+              <div carousel-item>
+                <div><a href="https://cloud.tencent.com/document/product/647/32398" target="_blank" class="layui-bg-red">腾讯云webrtc文档</a></div>
+                <div><a href="https://www.layui.com/doc/" target="_blank" class="layui-bg-green">layui文档</a></div>
+                <div><a href="https://developers.weixin.qq.com/miniprogram/dev/" target="_blank" class="layui-bg-blue">小程序文档</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="layui-card">
+          <div class="layui-card-header">
+            作者心语
+            <i class="layui-icon layui-icon-tips" lay-tips="要支持的噢" lay-offset="5"></i>
+          </div>
+          <div class="layui-card-body layui-text layadmin-text">
+            <p>传统会议更关注企业自身的利益，人员管理是否到位、如何及时通知信息，
+              当然企业也逐渐发现了传统会议动中存在的互动性不强的问题。</p>
+            <p>移动会议更加关注活动是否安全、如何提高趣味性、如何增强互动性。
+            </p>
+            <p>感谢开源框架layui！子曰：君子不用防，小人防不住。请务必通过官网正规渠道，获得 <a href="http://www.layui.com/admin/" target="_blank">layuiadmin</a>！</p>
+            <p>—— 杨光（<a href="https://github.com/NTDXYG/" target="_blank">https://github.com/NTDXYG</a>）</p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <script src="../../layuiadmin/layui/layui.js?t=1"></script>  
+  <script>
+  layui.config({
+    base: '../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'console', 'sample']);
+  </script>
+</body>
+</html>
+

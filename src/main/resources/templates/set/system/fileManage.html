@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>日志监控</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-btn-container">
+                <button type="button" class="layui-btn layui-btn-primary" id="add">
+                    <i class="layui-icon">&#xe67c;</i>上传文件
+                </button>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <table id="demo" class="layui-hide" lay-filter="test"></table>
+
+        </div>
+    </div>
+</div>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="show"><i
+            class="layui-icon layui-icon-list"></i>查看</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+            class="layui-icon layui-icon-delete"></i>删除</a>
+</script>
+<script type="text/html" id="toolbarDemo">
+
+</script>
+<script src="/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['laydate', 'layer', 'table', 'upload'], function () {
+        var $ = layui.$,
+            form = layui.form,
+            laydate = layui.laydate,
+            table = layui.table,
+            upload = layui.upload;
+        layer = layui.layer;
+
+        var uploadInst = upload.render({
+            elem: '#add' //绑定元素
+            , url: '/upload' //上传接口
+            , accept: 'file'
+            , size: 0
+            , done: function (res) {
+                //上传完毕回调
+                if (res.code == 200) {
+                    $("#src").val(res.msg);
+                    layer.msg('文件上传成功',
+                        {
+                            icon: 1,
+                            time: 800,
+                        }, function () {
+                            table.reload('idTest', {
+                                url: '/getFile',
+                                page: {
+                                    curr: 1
+                                }
+                            });
+                        });
+                } else {
+                    layer.msg('文件上传失败');
+                }
+            }
+            , error: function () {
+                //请求异常回调
+            }
+        });
+        //表格初始化
+        table.render({
+            elem: '#demo',
+            id: 'idTest',
+            url: '/getFile',
+            page: true,
+            toolbar: '#toolbarDemo',
+            height: 'full-150',
+            cellMinWidth: 80,
+            cols: [
+                [ //表头
+                    {type: 'checkbox'},
+                    {
+                        field: 'id',
+                        title: 'ID',
+                        width: 80,
+                        sort: true
+                    },
+                    {
+                        field: 'name',
+                        width: 200,
+                        title: '文件名'
+                    },{
+                    field: 'url',
+                    width: 580,
+                    title: '文件地址'
+                }, {
+                    fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180
+                }]
+            ]
+        });
+
+        //监听工具条
+        //监听事件
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case 'show':
+                    window.open(data.url);
+                    break;
+                case 'del':
+                    layer.confirm('是否删除此记录?', {icon: 3, title: '提示'}, function (index) {
+                        $.ajax({
+                            type: "delete",
+                            contentType: 'application/json',
+                            url: "/delFile/" + data.id,
+                            data: {},
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.code == 200) {
+                                    layer.msg('删除成功',
+                                        {
+                                            icon: 1,
+                                            time: 1000
+                                        }, function () {
+                                            table.reload('idTest', {
+                                                url: '/getFile',
+                                                page: {
+                                                    curr: 1
+                                                }
+                                            });
+                                            layer.close(index); //关闭弹层
+                                        });
+                                } else {
+                                    layer.msg("后台出错");
+                                }
+                            }
+                        });
+                    });
+                    break;
+            }
+            ;
+        });
+    });
+</script>
+</body>
+</html>

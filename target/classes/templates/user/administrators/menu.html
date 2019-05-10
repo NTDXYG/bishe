@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>layuiAdmin 角色管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="/layuiadmin/layui/lay/modules/eleTree/eleTree.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" style="padding: 20px 0 0 0;">
+
+    <input type="hidden" th:value="${id}" id="id">
+    <div class="eleTree ele1"></div>
+    <div style="padding: 10px;">
+        <button class="layui-btn layuiadmin-btn-role" id="close">关闭</button>
+        <button class="layui-btn layuiadmin-btn-role" id="save">保存</button>
+    </div>
+
+</div>
+
+<script src="/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'table', 'layer', 'eleTree'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , layer = layui.layer
+            , eleTree = layui.eleTree;
+
+        var el = eleTree.render({
+            elem: '.ele1',
+            defaultExpandAll: true,
+            url: '/menu/getMenu/' + $("#id").val(),
+            showCheckbox: true,
+        });
+
+        $("#open").on('click', function () {
+            el.expandAll();
+        });
+        $("#close").on('click', function () {
+            el.unExpandAll();
+        });
+        $("#save").on('click', function () {
+            var formData = [];
+            for (var i = 0; i < el.getChecked(false, true).length; i++) {
+                formData.push(el.getChecked(false, true)[i].id);
+            }
+            $.ajax({
+                type: "put",
+                url: "/role/updateMenu/"+ formData,
+                data: {
+                    role_id : $("#id").val()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code == 200) {
+                        layer.msg('更新成功',
+                            {
+                                icon: 1,
+                                time: 1000
+                            });
+                    } else {
+                        layer.msg("后台出错");
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
+

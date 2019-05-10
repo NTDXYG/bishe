@@ -1,0 +1,66 @@
+Manifest-Version: 1.0
+Class-Path: logback-core-1.1.11.jar jolokia-core-1.3.7.jar shiro-confi
+ g-ogdl-1.4.0.jar log4j-over-slf4j-1.7.25.jar spring-plugin-core-1.2.0
+ .RELEASE.jar spring-context-support-4.3.22.RELEASE.jar mqtt-client-1.
+ 3.jar tomcat-juli-8.5.37.jar qrgen-1.4.jar jul-to-slf4j-1.7.25.jar dr
+ uid-1.1.12.jar shiro-lang-1.4.0.jar qqwry-java-0.7.0.jar activemq-pro
+ tobuf-1.1.jar spring-tx-4.3.22.RELEASE.jar spring-web-4.3.22.RELEASE.
+ jar spring-oxm-4.3.22.RELEASE.jar jedis-2.9.1.jar tomcat-embed-websoc
+ ket-8.5.37.jar hawtbuf-1.9.jar mockito-all-1.9.5.jar attoparser-2.0.4
+ .RELEASE.jar activemq-core-5.7.0.jar jcl-over-slf4j-1.7.25.jar common
+ s-configuration-1.8.jar lombok-1.16.22.jar geronimo-j2ee-management_1
+ .1_spec-1.0.1.jar shiro-crypto-cipher-1.4.0.jar springfox-core-2.4.0.
+ jar validation-api-1.1.0.Final.jar commons-pool2-2.4.3.jar spring-boo
+ t-admin-starter-client-1.5.7.jar spring-cloud-commons-1.3.1.RELEASE.j
+ ar swagger-annotations-1.5.6.jar jboss-logging-3.3.2.Final.jar common
+ s-collections-3.2.2.jar spring-boot-starter-amqp-1.5.19.RELEASE.jar s
+ hiro-cache-1.4.0.jar springfox-spring-web-2.4.0.jar jasypt-1.9.0.jar 
+ commons-net-3.1.jar json-simple-1.1.1.jar spring-boot-admin-server-ui
+ -1.5.7.jar fastdfs-client-1.26.2.jar shiro-crypto-hash-1.4.0.jar spri
+ ng-beans-4.3.22.RELEASE.jar spring-boot-starter-mail-1.5.19.RELEASE.j
+ ar zuul-core-1.3.0.jar shiro-core-1.4.0.jar spring-data-keyvalue-1.2.
+ 18.RELEASE.jar spring-jdbc-4.3.22.RELEASE.jar thymeleaf-extras-shiro-
+ 2.0.0.jar spring-retry-1.2.3.RELEASE.jar jackson-annotations-2.8.0.ja
+ r tls-sig-api-1.2.jar tomcat-annotations-api-8.5.37.jar json-20140107
+ .jar jackson-mapper-asl-1.9.11.jar spring-boot-actuator-1.5.19.RELEAS
+ E.jar bcpkix-jdk15on-1.59.jar DzFilter-1.1.0.jar spring-boot-1.5.19.R
+ ELEASE.jar spring-messaging-4.3.22.RELEASE.jar commons-io-2.4.jar spr
+ ing-webmvc-4.3.22.RELEASE.jar servo-core-0.7.2.jar spring-aop-4.3.22.
+ RELEASE.jar spring-core-4.3.22.RELEASE.jar spring-websocket-4.3.22.RE
+ LEASE.jar hawtdispatch-1.11.jar spring-boot-autoconfigure-1.5.19.RELE
+ ASE.jar javax.mail-1.5.6.jar HdrHistogram-2.1.9.jar commons-codec-1.1
+ 0.jar fastjson-1.2.47.jar jackson-core-2.8.11.jar swagger-models-1.5.
+ 6.jar bcprov-jdk15on-1.59.jar httpcore-4.4.10.jar spring-boot-starter
+ -data-redis-1.5.19.RELEASE.jar thymeleaf-expression-processor-1.1.3.j
+ ar springfox-schema-2.4.0.jar springfox-swagger-ui-2.4.0.jar logback-
+ classic-1.1.11.jar springfox-spi-2.4.0.jar spring-boot-admin-client-1
+ .5.7.jar spring-boot-starter-jdbc-1.5.19.RELEASE.jar groovy-2.4.16.ja
+ r javase-3.0.0.jar activation-1.1.jar annotations-2.0.0.jar hystrix-c
+ ore-1.5.12.jar springfox-swagger-common-2.4.0.jar sqlite-jdbc-3.15.1.
+ jar jackson-databind-2.8.11.3.jar spring-data-redis-1.8.18.RELEASE.ja
+ r geronimo-jms_1.1_spec-1.1.1.jar spring-boot-starter-logging-1.5.19.
+ RELEASE.jar spring-plugin-metadata-1.2.0.RELEASE.jar spring-context-4
+ .3.22.RELEASE.jar hibernate-validator-5.3.6.Final.jar guava-18.0.jar 
+ spring-boot-starter-1.5.19.RELEASE.jar spring-boot-starter-actuator-1
+ .5.19.RELEASE.jar tomcat-embed-core-8.5.37.jar commons-logging-1.1.1.
+ jar unbescape-1.1.5.RELEASE.jar commons-beanutils-1.9.3.jar kahadb-5.
+ 7.0.jar httpclient-4.5.6.jar shiro-spring-1.4.0.jar spring-expression
+ -4.3.22.RELEASE.jar ezmorph-1.0.6.jar http-client-1.1.1.RELEASE.jar s
+ pring-boot-starter-thymeleaf-1.5.19.RELEASE.jar jsoup-1.11.3.jar shir
+ o-event-1.4.0.jar spring-boot-starter-tomcat-1.5.19.RELEASE.jar class
+ mate-1.3.4.jar shiro-crypto-core-1.4.0.jar commons-lang3-3.3.2.jar js
+ on-lib-2.4-jdk15.jar spring-boot-starter-websocket-1.5.19.RELEASE.jar
+  spring-boot-starter-web-1.5.19.RELEASE.jar spring-amqp-1.7.12.RELEAS
+ E.jar commons-lang-2.5.jar jackson-core-asl-1.9.11.jar hawtdispatch-t
+ ransport-1.11.jar tomcat-embed-el-8.5.37.jar shiro-web-1.4.0.jar core
+ -3.3.0.jar slf4j-api-1.7.25.jar spring-cloud-context-1.3.1.RELEASE.ja
+ r spring-rabbit-1.7.12.RELEASE.jar spring-security-crypto-4.2.11.RELE
+ ASE.jar netflix-commons-util-0.1.1.jar thymeleaf-spring4-3.0.9.RELEAS
+ E.jar mysql-connector-java-5.1.47.jar archaius-core-0.6.0.jar thumbna
+ ilator-0.4.8.jar spring-data-commons-1.13.18.RELEASE.jar springfox-sw
+ agger2-2.4.0.jar shiro-config-core-1.4.0.jar thymeleaf-3.0.9.RELEASE.
+ jar tomcat-jdbc-8.5.37.jar snakeyaml-1.17.jar amqp-client-4.8.3.jar t
+ hymeleaf-layout-dialect-2.2.2.jar spring-cloud-netflix-core-1.4.2.REL
+ EASE.jar rxjava-1.2.0.jar spring-boot-admin-server-1.5.7.jar
+Main-Class: com.yg.bishe.BisheApplication
+

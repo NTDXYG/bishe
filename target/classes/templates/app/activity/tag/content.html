@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>设置我的资料</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" style="padding: 20px 0 0 0;">
+    <div class="layui-form-item" style="display: none" th:if="${tag != null}">
+        <label class="layui-form-label">ID</label>
+        <div class="layui-input-inline">
+            <input th:value="${tag.id}" type="text" name="id" id="id" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">标签名</label>
+        <div class="layui-input-inline">
+            <input name="name" lay-verify="required" id="name" placeholder="标签名"
+                   th:value="${tag!=null}?${tag.name}"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">颜色</label>
+        <div class="layui-input-inline">
+            <select name="color" lay-verify="" lay-search>
+                <option value="" >请选择</option>
+                <option value="red" th:selected="${tag!=null}?${tag.color == 'red'}">嫣红</option>
+                <option value="orange" th:selected="${tag!=null}?${tag.color == 'orange'}">桔橙</option>
+                <option value="yellow" th:selected="${tag!=null}?${tag.color == 'yellow'}">明黄</option>
+                <option value="olive" th:selected="${tag!=null}?${tag.color == 'olive'}">橄榄</option>
+                <option value="green" th:selected="${tag!=null}?${tag.color == 'green'}">森绿</option>
+                <option value="cyan" th:selected="${tag!=null}?${tag.color == 'cyan'}">天青</option>
+                <option value="blue" th:selected="${tag!=null}?${tag.color == 'blue'}">海蓝</option>
+                <option value="purple" th:selected="${tag!=null}?${tag.color == 'purple'}">姹紫</option>
+                <option value="mauve" th:selected="${tag!=null}?${tag.color == 'mauve'}">木槿</option>
+                <option value="pink" th:selected="${tag!=null}?${tag.color == 'pink'}">桃粉</option>
+                <option value="brown" th:selected="${tag!=null}?${tag.color == 'brown'}">棕褐</option>
+                <option value="grey" th:selected="${tag!=null}?${tag.color == 'grey'}">玄灰</option>
+                <option value="gray" th:selected="${tag!=null}?${tag.color == 'gray'}">草灰</option>
+                <option value="black" th:selected="${tag!=null}?${tag.color == 'black'}">墨黑</option>
+                <option value="white" th:selected="${tag!=null}?${tag.color == 'white'}">雅白</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="addAdmin" id="addAdmin" value="确认">
+    </div>
+</div>
+
+<script src="/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'layer', 'upload', 'form'], function () {
+        var $ = layui.$,
+            layer = layui.layer,
+            form = layui.form,
+            upload = layui.upload;
+
+    });
+</script>
+</body>
+</html>

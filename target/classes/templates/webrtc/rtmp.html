@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${room.name}]]</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/layuiadmin/style/admin.css" media="all">
+    <!--弹幕-->
+    <link rel="stylesheet" type="text/css" href="/danmu/static/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/danmu/dist/css/barrager.css">
+    <link rel="stylesheet" type="text/css" href="/danmu/static/pick-a-color/css/pick-a-color-1.2.3.min.css">
+    <link type="text/css" rel="stylesheet" href="/danmu/static/syntaxhighlighter/styles/shCoreDefault.css"/>
+</head>
+<body>
+
+<div class="layui-col-md9" id="lay9">
+    <div id="playercontainer"></div>
+</div>
+<div class="layui-col-md3" id="lay3">
+    <div class="layui-collapse" lay-filter="test">
+        <div class="layui-colla-item" id="caozuo">
+            <h2 class="layui-colla-title">操作</h2>
+            <div class="layui-colla-content layui-show">
+                <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-radius" id="getNumber"></button>
+                    <button class="layui-btn layui-btn-radius layui-btn-danger" id="cleanAll">清除弹幕</button>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-radius layui-btn-normal" id="sign">用户签到</button>
+                    <button class="layui-btn layui-btn-radius layui-btn-normal" id="choujiang">抽奖</button>
+                </div>
+                <div id="qrcode" hidden style="width:280px; height:280px;margin-left: 10px "></div>
+            </div>
+        </div>
+        <hr class="layui-bg-black">
+        <div style=" overflow-y: auto; border: 0px; margin-left: 10px; margin-right: 10px;solid: #333;"
+             id="show">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/danmu/static/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/danmu/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/danmu/static/js/tinycolor-0.9.15.min.js"></script>
+<script type="text/javascript" src="/danmu/dist/js/jquery.barrager.min.js"></script>
+<script type="text/javascript" src="/danmu/static/syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="/danmu/static/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+<script type="text/javascript" src="/danmu/static/syntaxhighlighter/scripts/shBrushPhp.js"></script>
+<script type="text/javascript" src="/danmu/static/pick-a-color/js/pick-a-color-1.2.3.min.js"></script>
+<script type="text/javascript" src="/webrtc/js/cyberplayer.js"></script>
+<script type="text/javascript" src="http://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
+<script src="/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['laydate', 'layer', 'table', 'element'], function () {
+        var $ = layui.$,
+            layer = layui.layer,
+            element = layui.element;
+
+        var lockReconnect = false;//避免重复连接
+        var wsUrl = "wss://ntdxyg.mynatapp.cc/webSocket/chat/"+[[${room.id}]];
+        var ws;
+        var tt;
+        function createWebSocket() {
+            try {
+                ws = new WebSocket(wsUrl);
+                init();
+            } catch(e) {
+                console.log('catch');
+                reconnect(wsUrl);
+            }
+        }
+        function init() {
+            ws.onclose = function () {
+                console.log('链接关闭');
+                reconnect(wsUrl);
+            };
+            ws.onerror = function() {
+                console.log('发生异常了');
+                reconnect(wsUrl);
+            };
+            ws.onopen = function () {
+                //心跳检测重置
+                heartCheck.start();
+            };
+            ws.onmessage = function (event) {
+                //拿到任何消息都说明当前连接是正常的
+                heartCheck.start();
+                var show = document.getElementById('show');
+                var text = event.data;
+                if (text == "发送心跳") {
+                    console.log('接收到心跳');
+                }else if ($.parseJSON(text).people != null ){
+                    $('#getNumber').html("在线人数："+$.parseJSON(text).people);
+                } else {
+                    //接收并显示消息
+                    var info = $.parseJSON(text).info;
+                    var img = $.parseJSON(text).img;
+                    show.innerHTML += "<div><img src=\""+img+"\" style=\"width: 36px;height: 36px;border-radius: 100%;\">"+info+"</div><hr>";
+                    show.scrollTop = show.scrollHeight;
+                    $('body').barrager(JSON.parse(text));
+                }
+            }
+        }
+        function reconnect(url) {
+            if(lockReconnect) {
+                return;
+            };
+            lockReconnect = true;
+            //没连接上会一直重连，设置延迟避免请求过多
+            tt && clearTimeout(tt);
+            tt = setTimeout(function () {
+                createWebSocket(url);
+                lockReconnect = false;
+            }, 4000);
+        }
+        //心跳检测
+        var heartCheck = {
+            timeout: 3000,
+            timeoutObj: null,
+            serverTimeoutObj: null,
+            start: function(){
+                console.log('start');
+                var self = this;
+                this.timeoutObj && clearTimeout(this.timeoutObj);
+                this.serverTimeoutObj && clearTimeout(this.serverTimeoutObj);
+                this.timeoutObj = setTimeout(function(){
+                    //这里发送一个心跳，后端收到后，返回一个心跳消息，
+                    console.log('发送心跳');
+                    ws.send("发送心跳");
+                    self.serverTimeoutObj = setTimeout(function() {
+                        console.log(111);
+                        console.log(ws);
+                        ws.close();
+                    }, self.timeout);
+                }, this.timeout)
+            }
+        }
+        createWebSocket(wsUrl);
+
+        $('#show').height($(window).height() - $('#caozuo').height() - 30);
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            width : 280,
+            height : 280
+        });
+        qrcode.makeCode(""+[[${room.id}]]);
+        $('#lay3').height($(window).height());
+        $('#show').height($(window).height() - $('#caozuo').height() - 30);
+        element.on('collapse(test)', function (data) {
+            $('#show').height($(window).height() - $('#caozuo').height() - 30);
+        });
+
+        $('#choujiang').on('click', function () {
+            window.open("http://ntdxyg.mynatapp.cc/choujiang/"+[[${room.id}]],"_blank");
+        });
+
+        $('#sign').on('click', function() {
+            layer.open({
+                type: 1,
+                title: '用户签到',
+                area: ['300px', '330px'],
+                content: $('#qrcode') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+            });
+        });
+
+        $('#cleanAll').on('click', function() {
+            $.fn.barrager.removeAll();
+        });
+        //监听折叠
+        element.on('collapse(test)', function (data) {
+            $('#show').height($(window).height() - $('#caozuo').height() - 30);
+        });
+
+        var player = cyberplayer("playercontainer").setup({
+            width: $('#lay9').width(),
+            height: $(window).height(),
+            file: "rtmp://118.25.55.210/live/"+[[${room.id}]],
+            autostart: true,
+            stretching: "uniform",
+            volume: 100,
+            controls: true,
+            rtmp: {
+                reconnecttime: 5, // rtmp直播的重连次数
+                bufferlength: 1 // 缓冲多少秒之后开始播放 默认1秒
+            },
+            ak: "60ab5203016d4c50a20b31710ee11eb0" // 公有云平台注册即可获得accessKey
+        });
+    });
+
+</script>
+</body>
+</html>

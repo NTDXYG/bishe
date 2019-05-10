@@ -1,0 +1,130 @@
+
+
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>iframe</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" style="padding: 20px 0 0 0;">
+    <div class="layui-form-item" style="display: none" th:if="${log != null}">
+        <label class="layui-form-label">ID</label>
+        <div class="layui-input-inline">
+            <input th:value="${log.id}" type="text" name="id" id="id" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">登录人</label>
+        <div class="layui-input-inline">
+            <input th:value="${log!=null}?${log.name}" type="text" name="name" id="name" lay-verify="required" placeholder="请输入登录人" autocomplete="off" class="layui-input">
+            <span id = "nameInfo"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">IP</label>
+        <div class="layui-input-inline">
+            <input th:value="${log!=null}?${log.ip}"  type="text" name="ip" id="ip" lay-verify="required" placeholder="请输入IP" autocomplete="off" class="layui-input">
+            <span id = "ipInfo"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">运营商</label>
+        <div class="layui-input-inline">
+            <input th:value="${log!=null}?${log.operator}"  type="text" readonly="readonly" name="operator" id="operator" lay-verify="required" placeholder="请输入IP" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">登陆地址</label>
+        <div class="layui-input-inline">
+            <input th:value="${log!=null}?${log.location}"  type="text" readonly="readonly" name="location" id="location" lay-verify="required" placeholder="请输入IP" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">登录方式</label>
+        <div class="layui-input-block" th:if="${log == null || log.mode eq '用户名/密码登录'}">
+            <input type="radio" name="mode" value="用户名/密码登录" title="用户名/密码登录" checked>
+            <input type="radio" name="mode" value="手机登录" title="手机登录">
+        </div>
+        <div class="layui-input-block" th:if="${log != null && log.mode eq '手机登录'}">
+            <input type="radio" name="mode" value="用户名/密码登录" title="用户名/密码登录">
+            <input type="radio" name="mode" value="手机登录" title="手机登录" checked>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">登录时间</label>
+        <div class="layui-input-inline">
+            <input th:value="${log!=null}?${#strings.substring(log.logintime,0,#strings.length(log.logintime)-2)}"  type="text" class="layui-input" id="logintime" name="logintime" placeholder="yyyy-MM-dd HH:mm:ss">
+        </div>
+    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="addLog" id="addLog" value="确认">
+    </div>
+</div>
+
+<script src="/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'laydate'], function(){
+        var $ = layui.$,
+            form = layui.form,
+            laydate = layui.laydate;
+        laydate.render({
+            elem: '#logintime'
+            ,type: 'datetime'
+        });
+        $('#name').blur(function () {
+            var name = $(this).val();
+            if (name != null) {
+                $.ajax({
+                    type:"get",
+                    contentType : 'application/json',
+                    url:"/checkAdminName",
+                    data:{"name":name},
+                    dataType : 'json',
+                    success:function(data) {
+                        var usernameInfo = "";
+                        if(data.code == 500){
+                            usernameInfo = "该用户名不存在";
+                            $("#nameInfo").css("color","red");
+                        }
+                        $("#nameInfo").html(usernameInfo);
+                    }
+                });
+            }
+        });
+        $('#ip').blur(function () {
+            var ip = $(this).val();
+            if (ip != null) {
+                $.ajax({
+                    type:"get",
+                    contentType : 'application/json',
+                    url:"/getOperateAndLocation",
+                    data:{"ip":ip},
+                    dataType : 'json',
+                    success:function(data) {
+                        var ipInfo = "";
+                        if(data.code == 200){
+                            $("#operator").val(JSON.parse(data.msg).operator);
+                            $("#location").val(JSON.parse(data.msg).location);
+                        }else {
+                            ipInfo = "IP地址不正确";
+                            $("#ipInfo").css("color","red");
+                        }
+                        $("#ipInfo").html(ipInfo);
+                    }
+                });
+            }
+        });
+    })
+</script>
+</body>
+</html>

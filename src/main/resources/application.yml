@@ -1,0 +1,84 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  port: 8080
+
+spring:
+  thymeleaf:
+    cache: false
+  mvc:
+    favicon:
+      enabled: true
+  messages:
+    basename: i18n.login
+  datasource:
+    username: xxxxxxxx
+    password: xxxxxxxx
+    url: xxxxxxxx
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  http:
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  redis:
+    host: xxxxxxxx
+    password: xxxxxxxx
+  rabbitmq:
+    host: xxxxxxxx
+    username: xxxxxxxx
+    password: xxxxxxxx
+  boot:
+    admin:
+      url: http://127.0.0.1:8000
+  mail:
+    username: xxxxxxxx@qq.com
+    password: xxxxxxxx
+    host: smtp.qq.com
+    properties:
+      mail.stmp.ssl.enable: true
+management:
+  security:
+    enabled: false
+# 分布式文件系统fastdfs配置
+fdfs:
+  # socket连接超时时长
+  soTimeout: 1500
+  # 连接tracker服务器超时时长
+  connectTimeout: 600
+  pool:
+    # 从池中借出的对象的最大数目
+    max-total: 153
+    # 获取连接时的最大等待毫秒数100
+    max-wait-millis: 102
+  # 缩略图生成参数，可选
+  thumbImage:
+    width: 150
+    height: 150
+  # 跟踪服务器tracker_server请求地址,支持多个，这里只有一个，如果有多个在下方加- x.x.x.x:port
+  trackerList:
+    - xxxxxxxx:22122
+  #
+  # 存储服务器storage_server访问地址
+  web-server-url: http://xxxxxxxx
+

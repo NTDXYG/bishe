@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>layuiAdmin 网站用户 iframe 框</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+  <div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 0 0 0;">
+    <div class="layui-form-item">
+      <label class="layui-form-label">邮箱</label>
+      <div class="layui-input-inline">
+        <input type="text" th:value="${user.email}" name="email" lay-verify="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">身份证(头像面)</label>
+      <div class="layui-input-inline">
+        <input name="card" lay-verify="required" id="card" placeholder="图片地址" th:value="${user.card}" class="layui-input">
+      </div>
+      <div class="layui-input-inline layui-btn-container" style="width: auto;">
+        <button class="layui-btn layui-btn-primary" id="showCard">查看图片
+        </button>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">身份证(国徽面)</label>
+      <div class="layui-input-inline">
+        <input name="card_back" lay-verify="required" id="card_back" placeholder="图片地址" th:value="${user.card_back}" class="layui-input">
+      </div>
+      <div class="layui-input-inline layui-btn-container" style="width: auto;">
+        <button class="layui-btn layui-btn-primary" id="showCardBack">查看图片
+        </button>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">微信二维码</label>
+      <div class="layui-input-inline">
+        <input name="qrcode" lay-verify="required" id="qrcode" placeholder="图片地址" th:value="${user.qrcode}" class="layui-input">
+      </div>
+      <div class="layui-input-inline layui-btn-container" style="width: auto;">
+        <button class="layui-btn layui-btn-primary" id="showQrcode">查看图片
+        </button>
+      </div>
+    </div>
+    <div class="layui-form-item layui-hide">
+      <input type="button" lay-submit lay-filter="addAdmin" id="addAdmin" value="确认">
+    </div>
+  </div>
+
+  <script src="../../../layuiadmin/layui/layui.js"></script>  
+  <script>
+  layui.config({
+    base: '../../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form', 'layer', 'upload'], function(){
+    var $ = layui.$
+    ,form = layui.form
+    ,layer = layui.layer
+    ,upload = layui.upload ;
+
+    $('#showCard').on('click', function () {
+      layer.photos(
+              {photos: {title: "查看头像", data: [{src: $("#card").val()}]}, shade: .01, closeBtn: 1, anim: 5}
+      )
+      return false;
+    });
+    $('#showCardBack').on('click', function () {
+      layer.photos(
+              {photos: {title: "查看头像", data: [{src: $("#card_back").val()}]}, shade: .01, closeBtn: 1, anim: 5}
+      )
+      return false;
+    });
+    $('#showQrcode').on('click', function () {
+      layer.photos(
+              {photos: {title: "查看头像", data: [{src: $("#qrcode").val()}]}, shade: .01, closeBtn: 1, anim: 5}
+      )
+      return false;
+    });
+  })
+  </script>
+</body>
+</html>
